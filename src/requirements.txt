@@ -1,0 +1,8 @@
+Flask
+connexion[swagger-ui]
+matplotlib
+html-table-parser-python3
+pandas
+urllib3
+tables
+pickle5

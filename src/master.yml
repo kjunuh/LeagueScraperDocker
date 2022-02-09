@@ -1,0 +1,54 @@
+openapi: 3.0.0
+info:
+  version: '0.1'
+  title: Hello World
+  description: Introducing open api 3.0.0
+
+paths:
+  /hello:
+    get:
+      tags:
+        - hello
+      operationId: src.hello.hello_world
+      description: Returns hello world string
+      responses:
+        '200':
+          description: 'Success'
+  /sum/<arg1>/<arg2>:
+    get:
+      tags:
+        - SUM
+      operationId: src.sum.sum
+      description: Returns the sum of two numbers
+      responses:
+        '200':
+          description: 'Success'
+  /example:
+    get:
+      tags:
+        - plot
+      operationId: src.example.plot_png
+      description: plot
+      responses:
+        '200':
+          description: 'Success'
+  /fetchData/<username>:
+    get:
+      tags:
+        - plot
+      operationId: src.fetchData.makeData
+      description: plot
+      responses:
+        '200':
+          description: 'Success'
+  /plotChamps/<username>:
+    get:
+      tags:
+        - plot
+      operationId: src.graph.plotChamps
+      description: plot
+      responses:
+        '200':
+          description: 'Success'
+servers:
+  - url: 'http://localhost:8000/'
