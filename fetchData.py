@@ -1,19 +1,20 @@
 import re
 from timeit import default_timer as timer
 import os
+import sys
 
 import pandas as pd
 import urllib.request
 from pprint import pprint
 from html_table_parser.parser import HTMLTableParser
 
-folder = "data/"
+folder = "src/data/"
 def getSeason(summID=53840413, seasonID=17, username='xerelic', debug=False):
 
     sTrans = {1:1, 2:2, 3:3, 4:4, 5:5, 6:6, 7:7, 11:8, 13:9, 15:10, 17:11, 19:12}
     if debug: print(f'fetching {username} season', sTrans[seasonID])
     link = 'https://na.op.gg/summoner/champions/ajax/champions.rank/summonerId='+str(summID)+'&season='+str(seasonID)
-    # print(link)
+    print("LINK",link)
     req = urllib.request.Request(url=link)
 
     f = urllib.request.urlopen(req)
@@ -68,14 +69,17 @@ def getSeason(summID=53840413, seasonID=17, username='xerelic', debug=False):
 def getSummId(username):
     link = 'https://na.op.gg/summoner/userName='+username
     req = urllib.request.Request(url=link)
-
+    # print(link)
     f = urllib.request.urlopen(req)
     raw = f.read().decode('utf-8')
 
-    match = re.search('(?<=summonerId).[0-9]+', raw)
-    if match:
+    # match = re.search('(?<=summonerId).[0-9]+', raw)
+    match = re.search('(?<=pageProps":{"error":null,"data":{"id":).[0-9]+', raw)
+    if match: 
         # print(match.group(0))
-        return int(match.group(0).strip('='))
+        return int(match.group(0))
+    else: 
+        sys.exit("regex failing")
 
 def makeData(username):
     global folder
@@ -85,6 +89,7 @@ def makeData(username):
     seasonIDs = [1,2,3,4,5,6,7,11,13,15,17,19]
     # header = ["Season", "Champion", "Games Played", "Wins", "Losses", "Winrate", "Kills", "Deaths", "Assists", "Gold", "CS/m"]
     summID = getSummId(username)
+    print(summID)
     m = []
     
     for season in seasonIDs:
@@ -96,13 +101,7 @@ def makeData(username):
     # print(f"{username} complete, {round(end-start, 2)} seconds elapsed")
     return(f"Fetched {username} data, visit vm-148-12.ise.luddy.indiana.edu:11000/plotChamps/{username} to see graph")
 
-
-    # with open(folder+username+".csv", "w+", newline='') as f:
-    #     writer = csv.writer(f, lineterminator='\n')
-    #     writer.writerow(header)
-    #     for elem in dataList:
-    #         writer.writerows(elem)
-
+# makeData('xerelic')
 tfec = ['elfsuf', 'coolwhip420', 'nraddlygew', 'sekou', 'stealthinator', 'emended', 'xerelic', 'poweredbyrice', 'duckyduckplaysmc', 'meteoryte']
 ugglee = ['forlorn64', 'chrismonytf', 'parad0x05', '9wonwon', 'xerelic', 'jonbom', 'junpi', 'aurumrock', 'hipbo', 'theristis', 'cocheese01', 'minibatman', 'nickizer534']
 iu = ['CyborgSteve', 'D3f3ctive', 'Kevalon', 'AmericanHussar', 'co1iflower', '10slayer', 'MrLDS', 'YourLocalThicc', 'NiabiIsHere']

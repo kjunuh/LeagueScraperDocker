@@ -6,11 +6,10 @@ from flask import Response
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 
-folder = "src/data/"
-
+graphFolder = "src/data/"
 def plotChamps(username):
-    global folder
-    try: data = pd.read_hdf(folder+username+'.h5', 'df')
+    global graphFolder
+    try: data = pd.read_hdf(graphFolder+username+'.h5', 'df')
     except FileNotFoundError: 
         return f"{username} not found in database, visitvm-148-12.ise.luddy.indiana.edu:11000/fetchData/{username} and wait for confirmation"
     dic = {}
@@ -54,13 +53,14 @@ def plotChamps(username):
 
     output = io.BytesIO()
     FigureCanvas(fig).print_png(output)
+    plt.savefig(graphFolder+username+'.pdf')
     return Response(output.getvalue(), mimetype='image/png')
-plotChamps('xerelic')
+
 def plotGames(userList):
-    global folder
+    global graphFolder
     for user in userList:
         tGames = [[],[]]
-        data = pd.read_hdf(folder+user+'.h5', 'df')
+        data = pd.read_hdf(graphFolder+user+'.h5', 'df')
         for i in data['Season'].unique():
             tGames[0].append(i)
             tGames[1].append(data.loc[data['Season'] == i]['Games Played'].sum())
@@ -72,8 +72,8 @@ def plotGames(userList):
     plt.show()
 
 def plotCS(username):
-    global folder
-    data = pd.read_hdf(folder+username+'.h5', 'df')
+    global graphFolder
+    data = pd.read_hdf(graphFolder+username+'.h5', 'df')
     for champ in data.loc[data['Games Played'] >= 10]['Champion'].unique():
         d = data.loc[data['Champion'] == champ]
         plt.plot(d['Season'].values,d['CS/m'].values, label=champ, alpha=.5, linewidth=3)

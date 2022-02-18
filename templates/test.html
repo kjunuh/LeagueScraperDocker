@@ -2,17 +2,23 @@
 <html>
     <head>
         <title>League Ranked Stats</title>
+        <link type="text/css" rel="stylesheet" href="/static/style.css" />
     </head>
-    <body>
-        <h1>Hello</h1>
-        <!-- <img src="{{ user_image }}" alt="User Image"> -->
-        <p>Welcome to my league of legends ranked stat scraper. It pulls data from op.gg and graphs it in (hopefully) interesting ways.</p>
-        <!-- <p>hi lyvia</p> -->
-        <p>To see your graphs, enter your username below and click "Generate" to generate data</p>
-        <p>(this will take a couple seconds, so be patient)</p>
-        <form method="POST">
-            <input name="text" placeholder="Username (NA)">
-            <input type="submit" value="Generate">
-        </form>
-    </body>
+    <article class="page">
+        <body>
+            <h1>League Stat Scraper</h1>
+            <h3>UPDATE: op.gg changed how they do data fetching, breaking my script completely. :( <br>If you want to see what it looked like before, enter "xerelic" into the box, but unfortunately no new data can be fetched at this time</h3>
+            <!-- <img src="{{ user_image }}" alt="User Image"> -->
+            <p>Welcome to my league of legends ranked stat scraper. It pulls data from op.gg and graphs it in (hopefully) interesting ways.</p>
+            <p>To see your graphs, enter your username below and click "Generate" to generate data</p>
+            <p>(this will take a couple seconds, so be patient)</p>
+            <div id="in">
+            <form method="POST">
+                <input class="center-block" name="text" placeholder="Username (NA)">
+                <input class="center-block" type="submit" value="Generate">
+            </div>
+            </form>
+            
+        </body>
+    </article>
 </html>

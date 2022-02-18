@@ -32,23 +32,5 @@ paths:
       responses:
         '200':
           description: 'Success'
-  /fetchData/<username>:
-    get:
-      tags:
-        - plot
-      operationId: src.fetchData.makeData
-      description: plot
-      responses:
-        '200':
-          description: 'Success'
-  /plotChamps/<username>:
-    get:
-      tags:
-        - plot
-      operationId: src.graph.plotChamps
-      description: plot
-      responses:
-        '200':
-          description: 'Success'
 servers:
   - url: 'http://localhost:8000/'
